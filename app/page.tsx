@@ -19,7 +19,7 @@ export default function LandingPage() {
         <Link className="flex items-center justify-center" href="/">
           <Heart className="h-8 w-8 text-purple-600" />
           <span className="ml-2 text-2xl font-bold text-gray-900">
-            SpecialCare IEP
+            Bright App
           </span>
         </Link>
         <nav className="ml-auto hidden md:flex items-center gap-4 sm:gap-6">
@@ -336,7 +336,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-600">
-          © 2024 SpecialCare IEP. All rights reserved.
+          © {new Date().getFullYear()} Bright App IEP. All rights reserved.
         </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link
