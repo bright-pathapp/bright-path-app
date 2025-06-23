@@ -15,7 +15,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <header className="px-4 lg:px-6 h-16 flex items-center border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 sticky top-0 z-50">
+      <header className="px-4 lg:px-6 h-16 flex items-center border-b border-transparent bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 sticky top-0 z-50">
         <Link className="flex items-center justify-center" href="/">
           <Heart className="h-8 w-8 text-purple-600" />
           <span className="ml-2 text-2xl font-bold text-gray-900">
@@ -41,11 +41,10 @@ export default function LandingPage() {
           >
             About
           </Link>
-          <Link href="/login">
-            <Button variant="outline" size="sm">
-              Login
-            </Button>
-          </Link>
+
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/auth/login">Login</Link>
+          </Button>
         </nav>
       </header>
 
