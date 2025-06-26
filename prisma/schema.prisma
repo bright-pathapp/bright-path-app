@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  TEACHER
+  PARENT
+  ADMIN
+}
+
+enum MoodType {
+  HAPPY
+  NEUTRAL
+  SAD
+  EXCITED
+  TIRED
+  ANGRY
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  password  String
+  name      String
+  role      Role
+  teacher   Teacher?
+  parent    Parent?
+  admin     Admin?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Admin {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @unique @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Teacher {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String         @unique @db.ObjectId
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classes      Class[]
+  reports      ReportSharing[] // Reports sent by this teacher
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model Parent {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String         @unique @db.ObjectId
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  students      Student[]
+  sharedReports ReportSharing[] // Reports shared with this parent
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Class {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  teacherId   String       @db.ObjectId
+  teacher     Teacher      @relation(fields: [teacherId], references: [userId], onDelete: Cascade)
+  students    Student[]
+  moodReports MoodReport[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Student {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  dateOfBirth DateTime?
+  classId     String       @db.ObjectId
+  class       Class        @relation(fields: [classId], references: [id], onDelete: Cascade)
+  parentId    String       @db.ObjectId
+  parent      Parent       @relation(fields: [parentId], references: [userId], onDelete: Cascade)
+  moodRecords MoodRecord[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model MoodRecord {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  mood         MoodType
+  context      String?     // Additional comments/context
+  date         DateTime    @default(now())
+  studentId    String      @db.ObjectId
+  student      Student     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  moodReportId String?     @db.ObjectId
+  moodReport   MoodReport? @relation(fields: [moodReportId], references: [id])
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  
+  @@unique([studentId, date]) // One mood record per student per day
+}
+
+model MoodReport {
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  date           DateTime        @default(now()) // Date of report
+  notes          String?         // Overall notes for the class report
+  classId        String          @db.ObjectId
+  class          Class           @relation(fields: [classId], references: [id], onDelete: Cascade)
+  moodRecords    MoodRecord[]
+  reportSharings ReportSharing[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  
+  @@unique([classId, date]) // One report per class per day
+}
+
+model ReportSharing {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  type         String     // "daily" or "weekly"
+  moodReportId String     @db.ObjectId
+  moodReport   MoodReport @relation(fields: [moodReportId], references: [id], onDelete: Cascade)
+  teacherId    String     @db.ObjectId
+  teacher      Teacher    @relation(fields: [teacherId], references: [userId])
+  parentId     String     @db.ObjectId
+  parent       Parent     @relation(fields: [parentId], references: [userId])
+  sharedAt     DateTime   @default(now())
+}

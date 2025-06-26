@@ -10,44 +10,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import Navbar from "@/components/ui/navbar/navbar";
 
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <header className="px-4 lg:px-6 h-16 flex items-center border-b border-transparent bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 sticky top-0 z-50">
-        <Link className="flex items-center justify-center" href="/">
-          <Heart className="h-8 w-8 text-purple-600" />
-          <span className="ml-2 text-2xl font-bold text-gray-900">
-            Bright App
-          </span>
-        </Link>
-        <nav className="ml-auto hidden md:flex items-center gap-4 sm:gap-6">
-          <Link
-            className="text-sm font-medium hover:text-purple-600 transition-colors"
-            href="#features"
-          >
-            Features
-          </Link>
-          <Link
-            className="text-sm font-medium hover:text-purple-600 transition-colors"
-            href="#roles"
-          >
-            For Everyone
-          </Link>
-          <Link
-            className="text-sm font-medium hover:text-purple-600 transition-colors"
-            href="#about"
-          >
-            About
-          </Link>
 
-          <Button variant="outline" size="sm" asChild>
-            <Link href="/auth/login">Login</Link>
-          </Button>
-        </nav>
-      </header>
-
+      <Navbar />
       <main className="flex-1 w-full">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">

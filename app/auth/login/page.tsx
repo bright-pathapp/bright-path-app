@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -13,7 +16,40 @@ export default function LoginPage() {
   const [email, setEmail] = useState("johndoe@example.com");
   const [password, setPassword] = useState("••••••••••");
   const [rememberMe, setRememberMe] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
 
+      if (result?.error) {
+        setLoading(false);
+        return toast.error(result?.error);
+      }
+
+      // Redirect based on user role
+      const session = await fetch("/api/auth/session").then((res) =>
+        res.json()
+      );
+
+      if (session?.user?.role === "TEACHER") {
+        router.push("/dashboard/teacher");
+      } else if (session?.user?.role === "PARENT") {
+        router.push("/dashboard/parent");
+      } else {
+        router.push("/");
+      }
+    } catch (error) {
+      setLoading(false);
+      return toast.error("An error occurred during login");
+    }
+  };
   return (
     <div className="relative z-10 flex-1 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-2xl p-8 relative">
@@ -23,7 +59,7 @@ export default function LoginPage() {
           </h1>
         </div>
 
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
           {/* Email Field */}
           <div className="space-y-2">
             <Label
@@ -90,8 +126,12 @@ export default function LoginPage() {
           </div>
 
           {/* Proceed Button */}
-          <Button className="w-full cursor-pointer bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-none font-medium tracking-wide">
-            PROCEED
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full cursor-pointer bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-none font-medium tracking-wide"
+          >
+            {loading ? "Signing in..." : "Sign in"}
           </Button>
 
           {/* Divider */}
