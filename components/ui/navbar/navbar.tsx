@@ -9,8 +9,8 @@ import Profile from "./Profile";
 const Navbar = () => {
   const { data } = useSession();
   const user = data?.user;
-  console.log(user, "user");
-  console.log(data, "data");
+  // console.log(user, "user");
+  // console.log(data, "data");
   return (
     <header className="px-4 lg:px-6 h-16 flex items-center border-b border-transparent bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 sticky top-0 z-50">
       <Link className="flex items-center justify-center" href="/">

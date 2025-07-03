@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 import type { User } from "next-auth";
@@ -18,14 +19,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
-
+import { useMedia } from "react-use";
 const Profile = ({ user }: { user: User }) => {
+  const isMobile = useMedia("(max-width:1024px)", false);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="cursor-pointer">
-          {user?.name}
-        </Button>
+        {!isMobile ? (
+          <div className="hidden md:flex">
+            <Button variant="outline" className="cursor-pointer">
+              {user?.name}
+            </Button>
+          </div>
+        ) : (
+          <div className="flex md:hidden cursor-pointer ">
+            <UserIcon className="h-6 w-6 text-gray-500 ml-2" />
+          </div>
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 border-transparent" align="end">
         <DropdownMenuLabel>
