@@ -67,13 +67,22 @@ const page = async () => {
   return (
     <>
       <PageHeader title="Class Room" subtitle="List of teacher's class" />
-      {classesResult && "data" in classesResult && (
-        <TableComponent
-          columns={columns}
-          data={classesResult.data}
-          renderRow={renderRow}
-        />
-      )}
+      {classesResult &&
+        "data" in classesResult &&
+        (classesResult.data.length > 0 ? (
+          <TableComponent
+            columns={columns}
+            data={classesResult.data}
+            renderRow={renderRow}
+          />
+        ) : (
+          <div className="text-center text-gray-500 py-12">
+            No classrooms found. <br />
+            <span className="text-sm">
+              Click "Add Class" to create your first classroom.
+            </span>
+          </div>
+        ))}
       {/* Add pagination */}
       <AddClassModal />
     </>
