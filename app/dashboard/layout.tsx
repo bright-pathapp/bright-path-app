@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Profile from "@/components/ui/navbar/Profile";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({
   children,
@@ -26,6 +28,7 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data } = useSession();
   const user = data?.user;
+  const pathname = usePathname();
   return (
     <div className="flex h-screen bg-white overflow-hidden">
       {/* Mobile Sidebar Overlay */}
@@ -62,36 +65,73 @@ export default function DashboardLayout({
           <div className="px-4 space-y-1">
             <Button
               variant="ghost"
-              className="w-full justify-start bg-[#0089ff] text-white hover:bg-[#0089ff]/90 rounded-lg"
+              className={`w-full justify-start rounded-lg ${
+                pathname === "/dashboard/teacher"
+                  ? "bg-[#0089ff] text-white hover:bg-[#0089ff]/90"
+                  : "text-[#727272] hover:bg-[#f2f2f2]"
+              }`}
             >
-              <div className="w-4 h-4 mr-3 bg-white rounded-sm flex items-center justify-center">
-                <div className="w-2 h-2 bg-[#0089ff] rounded-sm"></div>
-              </div>
-              Dashboard
+              <Link
+                className="w-full justify-start items-center flex"
+                href="/dashboard/teacher"
+              >
+                {pathname === "/dashboard/teacher" ? (
+                  <div className="w-4 h-4 mr-3 bg-white rounded-sm flex items-center justify-center">
+                    <div className="w-2 h-2 bg-[#0089ff] rounded-sm"></div>
+                  </div>
+                ) : (
+                  <div className="w-4 h-4 mr-3 bg-[#e4e4e4] rounded-sm flex items-center justify-center">
+                    <div className="w-2 h-2 bg-[#727272] rounded-sm"></div>
+                  </div>
+                )}
+                Dashboard
+              </Link>
             </Button>
 
             <Button
               variant="ghost"
-              className="w-full justify-start text-[#727272] hover:bg-[#f2f2f2] rounded-lg"
+              className={`w-full justify-start rounded-lg ${
+                pathname === "/dashboard/teacher/students"
+                  ? "bg-[#0089ff] text-white hover:bg-[#0089ff]/90"
+                  : "text-[#727272] hover:bg-[#f2f2f2]"
+              }`}
             >
-              <UserPlus className="w-4 h-4 mr-3" />
-              New Registration
+              <Link
+                className="w-full justify-start items-center flex"
+                href="/dashboard/teacher/students"
+              >
+                <List
+                  className={`w-4 h-4 mr-3 ${
+                    pathname === "/dashboard/teacher/students"
+                      ? "text-white"
+                      : "text-[#727272]"
+                  }`}
+                />
+                Student List
+              </Link>
             </Button>
 
             <Button
               variant="ghost"
-              className="w-full justify-start text-[#727272] hover:bg-[#f2f2f2] rounded-lg"
+              className={`w-full justify-start rounded-lg ${
+                pathname === "/dashboard/teacher/moods"
+                  ? "bg-[#0089ff] text-white hover:bg-[#0089ff]/90"
+                  : "text-[#727272] hover:bg-[#f2f2f2]"
+              }`}
             >
-              <List className="w-4 h-4 mr-3" />
-              Student List
-            </Button>
-
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-[#727272] hover:bg-[#f2f2f2] rounded-lg"
-            >
-              <Smile className="w-4 h-4 mr-3" />
-              Student Mood
+              <Link
+                className="w-full justify-start items-center flex"
+                href="/dashboard/teacher/moods"
+              >
+                <Smile
+                  className={`w-4 h-4 mr-3 ${
+                    pathname === "/dashboard/teacher/moods"
+                      ? "text-white"
+                      : "text-[#727272]"
+                  }`}
+                />
+                Student Mood
+              </Link>
             </Button>
           </div>
         </nav>

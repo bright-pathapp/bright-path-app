@@ -3,16 +3,21 @@ import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/ui/pageHeader/PageHeader";
 import TableComponent from "@/components/ui/table/Table";
 import { TableCell, TableRow } from "@/components/ui/table";
-import AddClassModal from "@/components/ui/teacher/AddClassModal";
+import AddStudentModal from "@/components/ui/teacher/AddStudentModal";
 import { getClassesForTeacher } from "@/lib/actions/classes";
-import Link from "next/link";
-const page = async () => {
+import { getStudentsForClass } from "@/lib/actions/students";
+const page = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
+  const { classId, ...queryParams } = searchParams;
+
   const columns = [
-    { header: "Class Name", accessor: "name" },
-    { header: "Teacher", accessor: "teacherName" },
-    { header: "Date Created", accessor: "createdAt" },
-    { header: "Description", accessor: "description" },
-    { header: "No of students", accessor: "studentCount" },
+    { header: "Student Name", accessor: "name" },
+    { header: "Class", accessor: "class" },
+    { header: "Date of birth", accessor: "dateOfBirth" },
+    { header: "Parent", accessor: "parent" },
     {
       header: "Action",
       accessor: "view",
@@ -26,47 +31,51 @@ const page = async () => {
       className="border-b  border-[#e4e4e4] hover:bg-[#f9f9f9] "
     >
       <TableCell className="text-[#000000] font-medium">{item.name}</TableCell>
-      <TableCell className="text-[#727272]">{item.teacherName}</TableCell>
+      <TableCell className="text-[#727272]">{item.className}</TableCell>
       <TableCell className="text-[#727272]">
-        {item.createdAt.toLocaleDateString()}
+        {item.dateOfBirth.toLocaleDateString()}
       </TableCell>
-      <TableCell className="text-[#727272]">{item.description}</TableCell>
-      <TableCell className="text-[#727272]">{item.studentCount}</TableCell>
+      <TableCell className="text-[#727272]">{item.parentEmail}</TableCell>
+
       <TableCell>
         <Button
           variant="default"
           className=" text-white font-bold border-primary hover:bg-white p-2 h-auto  cursor-pointer hover:text-primary"
         >
-          <Link href={`/dashboard/teacher/students?classId=${item.id}`}>
-            view students
-          </Link>
+          view student
         </Button>
       </TableCell>
     </TableRow>
   );
   const classesResult = await getClassesForTeacher();
-  console.log(classesResult, "classes");
+  const studentResult = await getStudentsForClass(classId);
+  console.log(studentResult, "students");
   return (
     <>
-      <PageHeader title="Class Room" subtitle="List of teacher's class" />
-      {classesResult &&
-        "data" in classesResult &&
-        (classesResult.data.length > 0 ? (
+      <PageHeader
+        title="Add Students to your class"
+        subtitle="Add Student's manually"
+      />
+      {studentResult &&
+        "data" in studentResult &&
+        (studentResult.data.length > 0 ? (
           <TableComponent
             columns={columns}
-            data={classesResult.data}
+            data={studentResult.data}
             renderRow={renderRow}
           />
         ) : (
           <div className="text-center text-gray-500 py-12">
-            No classrooms found. <br />
+            No students found. <br />
             <span className="text-sm">
-              Click "Add Class" to create your first classroom.
+              Click "Add Student" to create a student.
             </span>
           </div>
         ))}
       {/* Add pagination */}
-      <AddClassModal />
+      <AddStudentModal
+        classes={classesResult && "data" in classesResult && classesResult.data}
+      />
     </>
   );
 };

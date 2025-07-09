@@ -16,16 +16,6 @@ import toast from "react-hot-toast";
 import { createClass } from "@/lib/actions/classes";
 const AddClassModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //   const handleSubmit = (e: React.FormEvent) => {
-  //     e.preventDefault();
-  //     console.log("Submitted data:", formData);
-  //     // Reset form and close modal
-  //     setFormData({ className: "", description: "" });
-  //     setIsModalOpen(false);
-  //   };
-  //   const handleInputChange = (field: string, value: string) => {
-  //     setFormData((prev) => ({ ...prev, [field]: value }));
-  //   };
 
   const { handleSubmit, loading } = useGenericSubmitHandler(async (data) => {
     const res = await createClass(data.className, data.description);
