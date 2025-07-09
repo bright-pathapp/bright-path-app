@@ -45,7 +45,7 @@ const page = async () => {
     </TableRow>
   );
   const classesResult = await getClassesForTeacher();
-  console.log(classesResult, "classes");
+  // console.log(classesResult, "classes");
   return (
     <>
       <PageHeader title="Class Room" subtitle="List of teacher's class" />
