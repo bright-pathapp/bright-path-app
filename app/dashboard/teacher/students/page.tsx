@@ -7,16 +7,20 @@ import AddStudentModal from "@/components/ui/teacher/AddStudentModal";
 import { getClassesForTeacher } from "@/lib/actions/classes";
 import { getStudentsForClass } from "@/lib/actions/students";
 
+// Next.js 15 uses Promises for params and searchParams
 interface PageProps {
-  params: { [key: string]: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ [key: string]: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function Page({ searchParams }: PageProps) {
+  // Await the searchParams Promise
+  const resolvedSearchParams = await searchParams;
   const classId =
-    typeof searchParams.classId === "string" ? searchParams.classId : undefined;
+    typeof resolvedSearchParams.classId === "string"
+      ? resolvedSearchParams.classId
+      : undefined;
 
-  // Rest of your component code remains the same...
   const columns = [
     { header: "Student Name", accessor: "name" },
     { header: "Class", accessor: "class" },
@@ -29,7 +33,6 @@ export default async function Page({ searchParams }: PageProps) {
   ];
 
   const renderRow = (item: any) => {
-    // Fix: Handle possible null/undefined dateOfBirth
     const dateString = item.dateOfBirth
       ? new Date(item.dateOfBirth).toLocaleDateString()
       : "Not specified";
@@ -82,7 +85,6 @@ export default async function Page({ searchParams }: PageProps) {
             </span>
           </div>
         ))}
-      {/* Add pagination */}
       <AddStudentModal
         classes={
           classesResult && "data" in classesResult ? classesResult.data : []
