@@ -7,15 +7,16 @@ import AddStudentModal from "@/components/ui/teacher/AddStudentModal";
 import { getClassesForTeacher } from "@/lib/actions/classes";
 import { getStudentsForClass } from "@/lib/actions/students";
 
-// Fix: Use proper naming for Next.js pages
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | undefined };
-}) {
+interface PageProps {
+  params: { [key: string]: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function Page({ searchParams }: PageProps) {
   const classId =
     typeof searchParams.classId === "string" ? searchParams.classId : undefined;
 
+  // Rest of your component code remains the same...
   const columns = [
     { header: "Student Name", accessor: "name" },
     { header: "Class", accessor: "class" },
