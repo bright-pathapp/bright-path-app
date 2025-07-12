@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user) {
-          throw new Error("invalid credentials");
+          throw new Error("Invalid email Address!");
         }
 
         const passwordValid = await compare(
@@ -45,7 +45,7 @@ export const authOptions: NextAuthOptions = {
         );
 
         if (!passwordValid) {
-          throw new Error("invalid credentials");
+          throw new Error("Invalid Password!");
         }
 
         // Get profile ID based on role

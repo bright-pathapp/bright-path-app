@@ -19,25 +19,28 @@ const Navbar = () => {
           Bright App
         </span>
       </Link>
-      <nav className="ml-auto hidden md:flex items-center gap-4 sm:gap-6">
-        <Link
-          className="text-sm font-medium hover:text-purple-600 transition-colors"
-          href="#features"
-        >
-          Features
-        </Link>
-        <Link
-          className="text-sm font-medium hover:text-purple-600 transition-colors"
-          href="#roles"
-        >
-          For Everyone
-        </Link>
-        <Link
-          className="text-sm font-medium hover:text-purple-600 transition-colors"
-          href="#about"
-        >
-          About
-        </Link>
+      <nav className="ml-auto flex items-center gap-4 sm:gap-6">
+        <div className="hidden md:flex items-center gap-4 sm:gap-6">
+          <Link
+            className="text-sm font-medium hover:text-purple-600 transition-colors"
+            href="#features"
+          >
+            Features
+          </Link>
+          <Link
+            className="text-sm font-medium hover:text-purple-600 transition-colors"
+            href="#roles"
+          >
+            For Everyone
+          </Link>
+          <Link
+            className="text-sm font-medium hover:text-purple-600 transition-colors"
+            href="#about"
+          >
+            About
+          </Link>
+        </div>
+
         {user ? (
           <Profile user={user} />
         ) : (
