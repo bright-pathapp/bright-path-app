@@ -29,9 +29,7 @@ export default async function AddContextPage({ searchParams }: PageProps) {
     return (
       <div className="p-8 text-center">
         <h2 className="text-2xl font-bold text-red-500">Error</h2>
-        <p className="mt-2">
-          {studentsResult?.message || "Failed to load students"}
-        </p>
+        <p className="mt-2">{"Failed to load students"}</p>
         <a
           href="/dashboard/teacher"
           className="text-blue-500 mt-4 inline-block"

@@ -72,7 +72,7 @@ const ReportHistoryPage = async () => {
           subtitle="Error loading your report history"
         />
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          {reportsResult?.error || "Failed to load mood reports"}
+          {"Failed to load mood reports"}
         </div>
         <Link href="/dashboard/teacher">
           <Button variant="outline" className="mt-4">

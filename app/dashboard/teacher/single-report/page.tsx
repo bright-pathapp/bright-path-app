@@ -41,7 +41,7 @@ const MoodReportDetailsPage = async ({ searchParams }: PageProps) => {
       <div className="p-8">
         <PageHeader title="Mood Report" subtitle="Error loading report" />
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          {reportResult?.error || "Failed to load mood report"}
+          {"Failed to load mood report"}
         </div>
         <Link href="/dashboard/teacher/report-history">
           <Button variant="outline" className="mt-4">
