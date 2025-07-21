@@ -40,11 +40,25 @@ export default async function AddContextPage({ searchParams }: PageProps) {
     );
   }
 
+  if (!("data" in studentsResult)) {
+    return (
+      <div className="p-8 text-center">
+        <h2 className="text-2xl font-bold text-red-500">Error</h2>
+        <p className="mt-2">Invalid response format from server</p>
+        <a
+          href="/dashboard/teacher"
+          className="text-blue-500 mt-4 inline-block"
+        >
+          Return to Dashboard
+        </a>
+      </div>
+    );
+  }
   // Filter only students with SAD or ANGRY moods
   //   const today = new Date();
   //   today.setHours(0, 0, 0, 0);
 
-  const sadAngryStudents = (studentsResult.data ?? []).filter((student) => {
+  const sadAngryStudents = (studentsResult?.data ?? []).filter((student) => {
     const hasMoodRecord =
       "moodRecords" in student && student.moodRecords.length > 0;
 
