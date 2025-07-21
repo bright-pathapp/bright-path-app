@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user) {
-          throw new Error("Invalid email Address!");
+          throw new Error("Invalid Email Address!");
         }
 
         const passwordValid = await compare(

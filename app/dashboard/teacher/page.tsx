@@ -6,6 +6,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import AddClassModal from "@/components/ui/teacher/AddClassModal";
 import { getClassesForTeacher } from "@/lib/actions/classes";
 import Link from "next/link";
+import AddStudentModal from "@/components/ui/teacher/AddStudentModal";
 const page = async () => {
   const columns = [
     { header: "Class Name", accessor: "name" },
@@ -20,6 +21,9 @@ const page = async () => {
     },
   ];
 
+  const classesResult = await getClassesForTeacher();
+  // console.log(classesResult, "classes");
+
   const renderRow = (item: any) => (
     <TableRow
       key={item.id}
@@ -32,20 +36,36 @@ const page = async () => {
       </TableCell>
       <TableCell className="text-[#727272]">{item.description}</TableCell>
       <TableCell className="text-[#727272]">{item.studentCount}</TableCell>
-      <TableCell>
+      <TableCell className="flex items-center  space-x-2">
+        {item.studentCount > 0 ? (
+          <Button
+            variant="default"
+            className=" text-white font-bold border-primary hover:bg-white p-2 h-auto  cursor-pointer hover:text-primary"
+            disabled={item.studentCount > 0 ? false : true}
+          >
+            <Link href={`/dashboard/teacher/students?classId=${item.id}`}>
+              View Students
+            </Link>
+          </Button>
+        ) : (
+          <AddStudentModal
+            classes={
+              classesResult && "data" in classesResult ? classesResult.data : []
+            }
+          />
+        )}
         <Button
           variant="default"
           className=" text-white font-bold border-primary hover:bg-white p-2 h-auto  cursor-pointer hover:text-primary"
+          disabled={item.studentCount > 0 ? false : true}
         >
-          <Link href={`/dashboard/teacher/students?classId=${item.id}`}>
-            view students
+          <Link href={`/dashboard/teacher/mood-check?classId=${item.id}`}>
+            Mood Check
           </Link>
         </Button>
       </TableCell>
     </TableRow>
   );
-  const classesResult = await getClassesForTeacher();
-  // console.log(classesResult, "classes");
   return (
     <>
       <PageHeader title="Class Room" subtitle="List of teacher's class" />

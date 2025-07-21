@@ -71,10 +71,10 @@ export default async function Page({ searchParams }: PageProps) {
       />
       {studentResult &&
         "data" in studentResult &&
-        (studentResult.data.length > 0 ? (
+        ((studentResult.data ?? []).length > 0 ? (
           <TableComponent
             columns={columns}
-            data={studentResult.data}
+            data={studentResult.data ?? []}
             renderRow={renderRow}
           />
         ) : (

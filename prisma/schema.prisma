@@ -96,7 +96,7 @@ model MoodRecord {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
   mood         MoodType
   context      String?     // Additional comments/context
-  date         DateTime    @default(now())
+  date         DateTime    
   studentId    String      @db.ObjectId
   student      Student     @relation(fields: [studentId], references: [id], onDelete: Cascade)
   moodReportId String?     @db.ObjectId

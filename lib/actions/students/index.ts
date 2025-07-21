@@ -98,6 +98,8 @@ export async function createStudent(
 
 export async function getStudentsForClass(classId?: string) {
   try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const session = await getServerSession(authOptions);
 
     if (!session || session.user.role !== "TEACHER") {
@@ -145,6 +147,16 @@ export async function getStudentsForClass(classId?: string) {
             select: {
               name: true,
             },
+          },
+          moodRecords: {
+            where: {
+              date: {
+                gte: today,
+                lt: new Date(today.getTime() + 24 * 60 * 60 * 1000),
+              },
+            },
+            orderBy: { createdAt: "desc" },
+            take: 1,
           },
           parent: {
             include: {

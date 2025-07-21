@@ -33,8 +33,25 @@ import {
 const AddStudentModal = ({ classes }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
+  // Email validation function
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValid = emailRegex.test(email);
+
+    if (!isValid) {
+      setEmailError("Please enter a valid email address");
+      return false;
+    }
+
+    setEmailError(null);
+    return true;
+  };
   const { handleSubmit, loading } = useGenericSubmitHandler(async (data) => {
+    if (!validateEmail(data.parentEmail)) {
+      return "Use Valid Email";
+    }
     // Convert date to Date object if selected
     const dateOfBirth = date ? new Date(date) : null;
 
@@ -54,9 +71,13 @@ const AddStudentModal = ({ classes }: any) => {
       toast.success("Student created successfully");
     }
   });
+  // Handle email input change and validate on blur
+  const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    validateEmail(e.target.value);
+  };
 
   return (
-    <div className="mt-6">
+    <div className="">
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogTrigger asChild>
           <Button className="bg-[#0089ff] text-[#ffffff] hover:bg-[#4976f4] px-6">
@@ -152,9 +173,16 @@ const AddStudentModal = ({ classes }: any) => {
                 name="parentEmail"
                 type="email"
                 placeholder="Enter parent's email"
-                className="border-[#e4e4e4] focus:border-[#0089ff]"
+                className={`border-[#e4e4e4] focus:border-[#0089ff] ${
+                  emailError ? "border-red-500" : ""
+                }`}
                 required
+                onBlur={handleEmailBlur}
+                onChange={() => emailError && setEmailError(null)}
               />
+              {emailError && (
+                <p className="text-red-500 text-sm mt-1">{emailError}</p>
+              )}
             </div>
 
             <div className="flex justify-end space-x-2 pt-4">

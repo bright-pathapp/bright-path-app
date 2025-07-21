@@ -121,16 +121,16 @@ export default function DashboardLayout({
             >
               <Link
                 className="w-full justify-start items-center flex"
-                href="/dashboard/teacher/moods"
+                href="/dashboard/teacher/report-history"
               >
                 <Smile
                   className={`w-4 h-4 mr-3 ${
-                    pathname === "/dashboard/teacher/moods"
+                    pathname === "/dashboard/teacher/report-history"
                       ? "text-white"
                       : "text-[#727272]"
                   }`}
                 />
-                Student Mood
+                Report History
               </Link>
             </Button>
           </div>
@@ -186,15 +186,18 @@ export default function DashboardLayout({
 
         {/* Scrollable Main Content */}
         <main className="flex-1 overflow-y-auto pt-20 pb-6 px-6">
-          <div className="mb-8">
-            <h2 className="text-2xl lg:text-3xl font-bold text-[#000000] mb-2">
-              Hello {user?.name}
-              <span className="inline-block">👋</span>
-            </h2>
-            <p className="text-[#727272] text-base lg:text-lg">
-              {"Let's learn something new today!"}
-            </p>
-          </div>
+          {pathname === "/dashboard/teacher" && (
+            <div className="mb-8">
+              <h2 className="text-2xl lg:text-3xl font-bold text-[#000000] mb-2">
+                Hello {user?.name}
+                <span className="inline-block">👋</span>
+              </h2>
+              <p className="text-[#727272] text-base lg:text-lg">
+                {"Let's learn something new today!"}
+              </p>
+            </div>
+          )}
+
           {children}
         </main>
       </div>
