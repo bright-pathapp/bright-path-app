@@ -8,7 +8,7 @@ import { getClassesForTeacher } from "@/lib/actions/classes";
 import { getStudentsForClass } from "@/lib/actions/students";
 
 // Next.js 15 uses Promises for params and searchParams
-interface PageProps {
+export interface PageProps {
   params: Promise<{ [key: string]: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }

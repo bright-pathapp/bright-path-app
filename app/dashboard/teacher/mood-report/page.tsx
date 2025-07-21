@@ -9,20 +9,16 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { format } from "date-fns";
 import { getMoodReports } from "@/lib/actions/moods";
+import { PageProps } from "../students/page";
 // import { getAllMoodReports, getMoodReports } from "@/lib/actions/moods";
 
-const MoodReportsPage = async ({
-  searchParams,
-}: {
-  searchParams: { id?: string };
-}) => {
+const MoodReportsPage = async ({ searchParams }: PageProps) => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== "TEACHER") {
     redirect("/auth/signin");
   }
-
   const params = await searchParams;
-  const classId = params.id;
+  const classId = typeof params.id === "string" ? params.id : undefined;
 
   if (!classId) {
     redirect("/dashboard/teacher");

@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { format } from "date-fns";
 import { getReportDetails } from "@/lib/actions/moods";
 import ShareReportSection from "@/components/ui/teacher/ShareReportSection";
+import { PageProps } from "../students/page";
 
 // Define mood types with their visual representations
 const MOOD_TYPES = {
@@ -19,18 +20,15 @@ const MOOD_TYPES = {
   ANGRY: { label: "Angry", emoji: "😠", color: "text-red-500" },
 };
 
-const MoodReportDetailsPage = async ({
-  searchParams,
-}: {
-  searchParams: { id?: string };
-}) => {
+const MoodReportDetailsPage = async ({ searchParams }: PageProps) => {
   // Authentication check
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== "TEACHER") {
     redirect("/auth/signin");
   }
+
   const params = await searchParams;
-  const reportId = params.id;
+  const reportId = typeof params.id === "string" ? params.id : undefined;
   if (!reportId) {
     redirect("/dashboard/teacher");
   }

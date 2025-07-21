@@ -4,14 +4,12 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import StudentContextEditor from "@/components/ui/teacher/StudentContextEditor";
+import { PageProps } from "../students/page";
 
-export default async function AddContextPage({
-  searchParams,
-}: {
-  searchParams: { classId?: string };
-}) {
+export default async function AddContextPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const classId = params.classId;
+  const classId =
+    typeof params.classId === "string" ? params.classId : undefined;
 
   // Authentication check
   const session = await getServerSession(authOptions);
