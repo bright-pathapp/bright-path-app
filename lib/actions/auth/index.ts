@@ -52,3 +52,52 @@ export async function createUser(
     return renderError(error);
   }
 }
+
+export const updateUserPassword = async ({
+  newPassword,
+  confirmPassword,
+  userEmail,
+}: {
+  newPassword: string;
+  confirmPassword: string;
+  userEmail: string;
+}) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    if (newPassword !== confirmPassword) {
+      throw new Error("Passwords do not match");
+    }
+
+    // Hash the password before saving
+    console.log(newPassword);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update user with proper Prisma syntax using data object
+    const updatedUser = await prisma.user.update({
+      where: {
+        email: userEmail,
+      },
+      data: {
+        password: hashedPassword,
+        isFirstLogin: user.role === Role.PARENT && false,
+      },
+    });
+
+    return {
+      status: true,
+      message: "Password updated successfully",
+      updated: true,
+    };
+  } catch (error) {
+    return renderError(error);
+  }
+};

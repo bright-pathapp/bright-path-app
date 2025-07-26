@@ -15,7 +15,7 @@ const MOOD_TYPES = {
   HAPPY: { label: "Happy", emoji: "😊", color: "text-green-500" },
   NEUTRAL: { label: "Neutral", emoji: "😐", color: "text-gray-500" },
   SAD: { label: "Sad", emoji: "😢", color: "text-blue-500" },
-  EXCITED: { label: "Excited", emoji: "😃", color: "text-yellow-500" },
+  EXCITED: { label: "Excited", emoji: "🤩", color: "text-yellow-500" },
   TIRED: { label: "Tired", emoji: "😴", color: "text-purple-500" },
   ANGRY: { label: "Angry", emoji: "😠", color: "text-red-500" },
 };

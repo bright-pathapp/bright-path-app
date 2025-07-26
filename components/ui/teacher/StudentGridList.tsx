@@ -19,7 +19,7 @@ const MOOD_TYPES = {
   SAD: { label: "Sad", emoji: "😢", color: "border-blue-500 bg-blue-50" },
   EXCITED: {
     label: "Excited",
-    emoji: "✨",
+    emoji: "🤩",
     color: "border-yellow-500 bg-yellow-50",
   },
   TIRED: {
@@ -194,8 +194,8 @@ const StudentGridList = ({
             key={student.id}
             className={`
               p-4 rounded-lg border-2 cursor-pointer transition-all
-              ${getMoodColor(student.id) || "border-[#e4e4e4]"}
-              hover:shadow-md bg-primary hover:bg-opacity-80
+              ${getMoodColor(student.id)}
+              hover:shadow-md  hover:bg-opacity-80 
             `}
             onClick={() => {
               setSelectedStudent(student);

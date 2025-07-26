@@ -40,6 +40,7 @@ export async function createStudent(
         password: hashedPassword,
         name: "Parent", // Default name
         role: Role.PARENT,
+        isFirstLogin: true,
         parent: {
           create: {},
         },

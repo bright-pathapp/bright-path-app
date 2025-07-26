@@ -11,6 +11,7 @@ declare module "next-auth" {
       email: string;
       role: string;
       profileId: string;
+      isFirstLogin: boolean;
     };
   }
 
@@ -20,6 +21,7 @@ declare module "next-auth" {
     email: string;
     role: string;
     profileId: string;
+    isFirstLogin: boolean;
   }
 }
 
@@ -31,5 +33,6 @@ declare module "next-auth/jwt" {
     email: string;
     role: string;
     profileId: string;
+    isFirstLogin: boolean;
   }
 }

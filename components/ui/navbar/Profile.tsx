@@ -20,6 +20,7 @@ import {
 import { UserIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useMedia } from "react-use";
+import Link from "next/link";
 const Profile = ({ user }: { user: User }) => {
   const isMobile = useMedia("(max-width:1024px)", false);
   return (
@@ -44,6 +45,13 @@ const Profile = ({ user }: { user: User }) => {
         <DropdownMenuGroup>
           <DropdownMenuItem className="cursor-pointer">
             Dashboard
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuGroup>
+          <DropdownMenuItem className="cursor-pointer">
+            <Link href="/dashboard/profile/change-password">
+              Change password
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
 

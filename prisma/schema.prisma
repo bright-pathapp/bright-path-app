@@ -32,6 +32,7 @@ model User {
   password  String
   name      String
   role      Role
+   isFirstLogin Boolean @default(false)
   teacher   Teacher?
   parent    Parent?
   admin     Admin?
