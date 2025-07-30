@@ -465,3 +465,139 @@ export async function getReportDetails(reportId: string) {
 
   return { error: "Unauthorized" };
 }
+
+export async function shareReportWithParents(
+  reportId: string,
+  type: "daily" | "weekly"
+) {
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "TEACHER") {
+    return { error: "Unauthorized" };
+  }
+
+  // Get teacher profile
+  const userWithTeacher = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    include: { teacher: true },
+  });
+
+  if (!userWithTeacher?.teacher) {
+    return { error: "Teacher profile not found" };
+  }
+
+  // Get report and verify ownership
+  const report = await prisma.moodReport.findUnique({
+    where: {
+      id: reportId,
+    },
+    include: {
+      class: true,
+      moodRecords: {
+        include: {
+          student: true,
+        },
+      },
+    },
+  });
+
+  if (!report || report.class.teacherId !== userWithTeacher.teacher.userId) {
+    return { error: "Report not found or unauthorized" };
+  }
+
+  // Collect unique parent IDs from the students in the report
+  const parentIds = new Set(
+    report.moodRecords.map((record) => record.student.parentId)
+  );
+
+  // Create sharing records for each parent
+  const sharings = await Promise.all(
+    Array.from(parentIds).map((parentId) =>
+      prisma.reportSharing.create({
+        data: {
+          moodReportId: reportId,
+          teacherId: userWithTeacher?.teacher
+            ? userWithTeacher.teacher.userId
+            : "",
+          parentId,
+          type,
+        },
+      })
+    )
+  );
+
+  revalidatePath(`/moods/reports/${reportId}`);
+  return { success: true, data: sharings };
+}
+
+// Parents Dashboard
+export async function getSharedReportsForParent() {
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "PARENT") {
+    return { error: "Unauthorized" };
+  }
+
+  // Get parent profile
+  const userWithParent = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    include: { parent: true },
+  });
+
+  if (!userWithParent?.parent) {
+    return { error: "Parent profile not found" };
+  }
+
+  console.log(userWithParent, " userWithParent");
+  const parentStudents = await prisma.student.findMany({
+    where: {
+      parentId: userWithParent.parent.userId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  const studentIds = parentStudents.map((student) => student.id);
+
+  const reports = await prisma.reportSharing.findMany({
+    where: {
+      parentId: userWithParent.parent.userId,
+    },
+    include: {
+      moodReport: {
+        include: {
+          class: {
+            include: {
+              teacher: {
+                include: {
+                  user: {
+                    select: {
+                      name: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          moodRecords: {
+            where: {
+              studentId: {
+                in: studentIds,
+              },
+            },
+            include: {
+              student: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      sharedAt: "desc",
+    },
+  });
+  console.log(reports, " reports");
+
+  return { success: true, data: reports };
+}

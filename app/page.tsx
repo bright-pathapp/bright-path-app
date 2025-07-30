@@ -3,7 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   Heart,
   Shield,
-  Clock,
   ArrowRight,
   UserCheck,
   GraduationCap,
@@ -16,7 +15,6 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-
       <Navbar />
       <main className="flex-1 w-full">
         {/* Hero Section */}
@@ -25,22 +23,26 @@ export default function LandingPage() {
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                    Empowering Every Child's Unique Journey
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                    Empower Your School to Meet Its Social-Emotional Goals
                   </h1>
                   <p className="max-w-[600px] text-gray-600 md:text-xl">
-                    Comprehensive IEP management system designed for children
-                    with special needs. Connect parents, teachers, and students
-                    in a supportive digital environment that celebrates every
-                    milestone.
+                    As a school leader, you're responsible for more than
+                    academic outcomes. Today's private schools are expected to
+                    nurture emotionally resilient students, foster meaningful
+                    parent partnerships, and demonstrate progress on SEL
+                    benchmarks.
+                  </p>
+                  <p className="max-w-[600px] text-gray-600 md:text-xl">
+                    BrightPath is the all-in-one emotional check-in platform
+                    designed to help your school track, understand, and respond
+                    to student well-being in real-time—while strengthening
+                    family engagement.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Link href="/login">
-                    <Button
-                      size="lg"
-                      className="bg-purple-600 hover:bg-purple-700"
-                    >
+                  <Link href="/auth/login">
+                    <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
                       Start Your Journey
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -54,10 +56,6 @@ export default function LandingPage() {
                     <Shield className="h-4 w-4 mr-1 text-green-600" />
                     FERPA Compliant
                   </div>
-                  <div className="flex items-center">
-                    <Clock className="h-4 w-4 mr-1 text-purple-600" />
-                    24/7 Family Support
-                  </div>
                 </div>
               </div>
               <div className="flex items-center justify-center">
@@ -66,7 +64,7 @@ export default function LandingPage() {
                     src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
                     width="600"
                     height="400"
-                    alt="Children with special needs learning together in an inclusive classroom"
+                    alt="Children learning together in a classroom environment"
                     className="mx-auto aspect-video overflow-hidden rounded-xl object-cover shadow-2xl"
                   />
                   <div className="absolute inset-0 bg-gradient-to-tr from-purple-600/20 to-pink-600/20 rounded-xl"></div>
@@ -81,16 +79,16 @@ export default function LandingPage() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-purple-100 px-3 py-1 text-sm text-purple-800">
+                <div className="inline-block rounded-lg bg-blue-100 px-3 py-1 text-sm text-blue-800">
                   For Everyone
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Supporting Every Role in Your Child's Education
+                  Supporting Every Role in a Child's Emotional Growth
                 </h2>
                 <p className="max-w-[900px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Our platform brings together parents, teachers, and students
-                  in a collaborative environment designed specifically for
-                  special needs education.
+                  BrightPath brings teachers, parents, and students together in
+                  a connected system that helps your school strengthen emotional
+                  awareness, communication, and support—every single day.
                 </p>
               </div>
             </div>
@@ -100,16 +98,24 @@ export default function LandingPage() {
                   <div className="rounded-full bg-pink-100 p-3 group-hover:bg-pink-200 transition-colors">
                     <Heart className="h-8 w-8 text-pink-600" />
                   </div>
-                  <h3 className="text-xl font-bold">For Parents</h3>
+                  <h3 className="text-xl font-bold">For Families</h3>
                   <p className="text-center text-gray-600">
-                    Stay connected with your child's progress, communicate with
-                    teachers, and access IEP goals and accommodations anytime.
+                    Strengthen Trust & Engagement at Scale. Give families a
+                    window into their child's emotional and academic
+                    journey—building stronger home-school partnerships and
+                    reducing communication breakdowns.
                   </p>
                   <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• Real-time progress updates</li>
-                    <li>• Direct teacher communication</li>
-                    <li>• IEP meeting scheduling</li>
+                    <li>• Real-time emotional and behavioral updates</li>
+                    <li>• Seamless two-way communication with educators</li>
+                    <li>
+                      • Easy access to learning milestones and support plans
+                    </li>
                   </ul>
+                  <p className="text-sm italic text-gray-600 mt-2">
+                    "When parents feel informed, they become your strongest
+                    partners in student success."
+                  </p>
                 </CardContent>
               </Card>
               <Card className="group hover:shadow-lg transition-shadow border-purple-100">
@@ -117,16 +123,22 @@ export default function LandingPage() {
                   <div className="rounded-full bg-blue-100 p-3 group-hover:bg-blue-200 transition-colors">
                     <UserCheck className="h-8 w-8 text-blue-600" />
                   </div>
-                  <h3 className="text-xl font-bold">For Teachers</h3>
+                  <h3 className="text-xl font-bold">For Educators</h3>
                   <p className="text-center text-gray-600">
-                    Manage IEP goals, track student progress, collaborate with
-                    families, and document accommodations effectively.
+                    Streamline Emotional Support Without Adding to Their
+                    Workload. Equip teachers with intuitive tools to track
+                    student emotional trends, document insights, and keep
+                    families in the loop—all within minutes.
                   </p>
                   <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• IEP goal tracking</li>
-                    <li>• Progress documentation</li>
-                    <li>• Family collaboration tools</li>
+                    <li>• Daily mood check-ins with built-in analysis</li>
+                    <li>• One-click parent updates and behavior notes</li>
+                    <li>• Centralized student insights for SEL reporting</li>
                   </ul>
+                  <p className="text-sm italic text-gray-600 mt-2">
+                    "BrightPath gives teachers what they need to support the
+                    whole child—without drowning in admin."
+                  </p>
                 </CardContent>
               </Card>
               <Card className="group hover:shadow-lg transition-shadow border-purple-100">
@@ -136,14 +148,20 @@ export default function LandingPage() {
                   </div>
                   <h3 className="text-xl font-bold">For Students</h3>
                   <p className="text-center text-gray-600">
-                    Age-appropriate interface to view achievements, access
-                    learning materials, and celebrate milestones.
+                    Empower Students to Express and Understand Their Emotions.
+                    Students learn to recognize, name, and share their feelings
+                    in a safe, developmentally appropriate way—building the
+                    foundation for long-term emotional intelligence.
                   </p>
                   <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• Visual progress tracking</li>
-                    <li>• Achievement celebrations</li>
-                    <li>• Accessible learning tools</li>
+                    <li>• Visual, age-appropriate mood tracking</li>
+                    <li>• Recognition of emotional growth milestones</li>
+                    <li>• Encouragement through daily engagement</li>
                   </ul>
+                  <p className="text-sm italic text-gray-600 mt-2">
+                    "SEL becomes second nature when students are given the right
+                    tools to reflect and grow."
+                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -158,11 +176,11 @@ export default function LandingPage() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-purple-100 px-3 py-1 text-sm text-purple-800">
+                <div className="inline-block rounded-lg bg-blue-100 px-3 py-1 text-sm text-blue-800">
                   Features
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Specialized Tools for Special Needs Education
+                  For Emotional Learning & Whole-Child Support
                 </h2>
               </div>
             </div>
@@ -172,14 +190,17 @@ export default function LandingPage() {
                   src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
                   width="300"
                   height="200"
-                  alt="Teacher working one-on-one with a special needs student"
+                  alt="Teacher working one-on-one with a student"
                   className="rounded-lg object-cover"
                 />
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold">IEP Goal Management</h3>
+                  <h3 className="text-xl font-bold">
+                    Emotional Trend Reporting
+                  </h3>
                   <p className="text-gray-600">
-                    Create, track, and update individualized education program
-                    goals with detailed progress monitoring and data collection.
+                    Turn daily mood check-ins into actionable insights with
+                    school-wide visibility into student well-being trends,
+                    classroom climate, and at-risk indicators.
                   </p>
                 </div>
               </div>
@@ -192,10 +213,11 @@ export default function LandingPage() {
                   className="rounded-lg object-cover"
                 />
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold">Family Communication</h3>
+                  <h3 className="text-xl font-bold">Home-School Bridge</h3>
                   <p className="text-gray-600">
-                    Secure messaging, progress sharing, and collaborative
-                    planning tools to keep families engaged and informed.
+                    Enable seamless communication between educators and
+                    parents—without extra admin—so families feel informed,
+                    included, and supported in real time.
                   </p>
                 </div>
               </div>
@@ -208,10 +230,11 @@ export default function LandingPage() {
                   className="rounded-lg object-cover"
                 />
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold">Accommodation Tracking</h3>
+                  <h3 className="text-xl font-bold">Family Communication</h3>
                   <p className="text-gray-600">
-                    Document and monitor accommodations and modifications to
-                    ensure consistent implementation across all settings.
+                    Foster stronger school-home partnerships with streamlined,
+                    secure tools for updates, collaborative planning, and
+                    transparency.
                   </p>
                 </div>
               </div>
@@ -220,14 +243,17 @@ export default function LandingPage() {
                   src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
                   width="300"
                   height="200"
-                  alt="Child celebrating achievement with colorful learning materials"
+                  alt="Child using a colorful emotional expression interface"
                   className="rounded-lg object-cover"
                 />
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold">Progress Celebration</h3>
+                  <h3 className="text-xl font-bold">
+                    Student Voice Empowerment
+                  </h3>
                   <p className="text-gray-600">
-                    Visual progress tracking and milestone celebrations that
-                    motivate students and recognize every achievement.
+                    Give students a safe, age-appropriate way to express their
+                    emotions daily—building self-awareness and helping schools
+                    respond proactively.
                   </p>
                 </div>
               </div>
@@ -235,43 +261,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
-              <div className="flex flex-col items-center space-y-4">
-                <div className="text-4xl font-bold text-purple-600">5,000+</div>
-                <div className="text-xl font-semibold">
-                  IEP Students Supported
-                </div>
-                <p className="text-center text-gray-600">
-                  Helping children with special needs achieve their
-                  individualized goals
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-4">
-                <div className="text-4xl font-bold text-pink-600">200+</div>
-                <div className="text-xl font-semibold">
-                  Special Education Programs
-                </div>
-                <p className="text-center text-gray-600">
-                  Trusted by schools and districts specializing in inclusive
-                  education
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-4">
-                <div className="text-4xl font-bold text-blue-600">95%</div>
-                <div className="text-xl font-semibold">Family Satisfaction</div>
-                <p className="text-center text-gray-600">
-                  Families report improved communication and student progress
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-purple-600 to-pink-600">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-blue-600 to-blue-300">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -279,8 +270,9 @@ export default function LandingPage() {
                   Ready to Support Every Child's Success?
                 </h2>
                 <p className="mx-auto max-w-[600px] text-purple-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Join families and educators who are already using SpecialCare
-                  IEP to create meaningful learning experiences.
+                  Join the school leaders and educators already leveraging
+                  BrightPath to drive impactful, student-centered learning
+                  outcomes.
                 </p>
               </div>
               <div className="space-x-4">
@@ -305,7 +297,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-600">
-          © {new Date().getFullYear()} Bright App IEP. All rights reserved.
+          © {new Date().getFullYear()} BrightPath. All rights reserved.
         </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link

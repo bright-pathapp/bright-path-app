@@ -14,7 +14,7 @@ export default async function AddContextPage({ searchParams }: PageProps) {
   // Authentication check
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== "TEACHER") {
-    redirect("/auth/signin");
+    redirect("/auth/login");
   }
 
   if (!classId) {

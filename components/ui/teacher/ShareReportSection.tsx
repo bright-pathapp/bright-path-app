@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-// import { shareReportWithParents } from "@/lib/actions/moods";
+import { shareReportWithParents } from "@/lib/actions/moods";
 
 export default function ShareReportSection({
   reportId,
@@ -13,7 +13,7 @@ export default function ShareReportSection({
   isShared?: boolean;
   sharingCount?: number;
 }) {
-  const [sharingType, setSharingType] = useState("daily");
+  const [sharingType, setSharingType] = useState<"daily" | "weekly">("daily");
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
@@ -23,24 +23,24 @@ export default function ShareReportSection({
     setError("");
     setSuccess("");
 
-    // try {
-    //   const result = await shareReportWithParents(reportId, sharingType);
+    try {
+      const result = await shareReportWithParents(reportId, sharingType);
 
-    //   if (result.success) {
-    //     setSuccess(`Report shared with ${result.data.length} parents`);
-    //     // Force reload to show updated UI
-    //     setTimeout(() => {
-    //       window.location.reload();
-    //     }, 1500);
-    //   } else {
-    //     setError(result.error || "Failed to share report");
-    //   }
-    // } catch (err) {
-    //   setError("An unexpected error occurred");
-    //   console.error(err);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+      if (result.success) {
+        setSuccess(`Report shared with ${result.data.length} parents`);
+        // Force reload to show updated UI
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      } else {
+        setError(result.error || "Failed to share report");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isShared) {
@@ -73,7 +73,7 @@ export default function ShareReportSection({
       <div className="flex items-center mb-4">
         <select
           value={sharingType}
-          onChange={(e) => setSharingType(e.target.value)}
+          onChange={(e) => setSharingType(e.target.value as "daily" | "weekly")}
           className="border rounded p-2 mr-4"
           disabled={isLoading}
         >

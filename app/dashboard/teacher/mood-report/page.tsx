@@ -15,7 +15,7 @@ import { PageProps } from "../students/page";
 const MoodReportsPage = async ({ searchParams }: PageProps) => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== "TEACHER") {
-    redirect("/auth/signin");
+    redirect("/auth/login");
   }
   const params = await searchParams;
   const classId = typeof params.id === "string" ? params.id : undefined;

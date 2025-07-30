@@ -48,6 +48,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid Password!");
         }
 
+        console.log(user);
         // Get profile ID based on role
         let profileId = null;
         if (user.role === "TEACHER" && user.teacher) {
@@ -81,13 +82,47 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    async jwt({ token, user }) {
+    // Remove the first jwt callback and keep only this one
+    async jwt({ token, user }: any) {
       if (user) {
+        // When signing in
         token.id = user.id;
         token.role = user.role;
         token.profileId = user.profileId;
         token.isFirstLogin = user.isFirstLogin;
+      } else {
+        // On subsequent requests, refresh user data
+        const dbUser = await prisma.user.findUnique({
+          where: {
+            email: token.email,
+          },
+          include: {
+            teacher: true,
+            parent: true,
+            admin: true,
+          },
+        });
+
+        if (dbUser) {
+          // Update token with the latest user data
+          token.id = dbUser.id;
+          token.role = dbUser.role;
+          token.isFirstLogin = dbUser.isFirstLogin;
+
+          // Get the correct profileId based on role
+          let profileId = null;
+          if (dbUser.role === "TEACHER" && dbUser.teacher) {
+            profileId = dbUser.teacher.id;
+          } else if (dbUser.role === "PARENT" && dbUser.parent) {
+            profileId = dbUser.parent.id;
+          } else if (dbUser.role === "ADMIN" && dbUser.admin) {
+            profileId = dbUser.admin.id;
+          }
+
+          token.profileId = profileId || "";
+        }
       }
+
       return token;
     },
   },

@@ -30,7 +30,7 @@ export default function AuthLayout({
       {/* Header */}
       <header className="relative z-10 flex justify-between items-center p-6 flex-shrink-0">
         <Link href={"/"} className="text-white text-xl font-bold tracking-wide">
-          BRIGHTPATH
+          BrightPATH
         </Link>
 
         <Button
